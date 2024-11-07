@@ -18,6 +18,7 @@ package keda
 
 import (
 	"context"
+	"github.com/kedacore/keda/v2/pkg/mock/mock_client"
 	"path/filepath"
 	"testing"
 	"time"
@@ -92,7 +93,7 @@ var _ = BeforeSuite(func() {
 	scaleClient, _, err := k8s.InitScaleClient(k8sManager)
 	Expect(err).ToNot(HaveOccurred())
 
-	metricsClient, err := k8s.InitPodMetricsClient(k8sManager)
+	metricsClient, err := mock_client.NewMockPodMetricsesGetter()
 	Expect(err).ToNot(HaveOccurred())
 
 	err = (&ScaledObjectReconciler{

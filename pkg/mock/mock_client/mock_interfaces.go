@@ -15,10 +15,13 @@ import (
 
 	gomock "go.uber.org/mock/gomock"
 	meta "k8s.io/apimachinery/pkg/api/meta"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	types "k8s.io/apimachinery/pkg/types"
 	watch "k8s.io/apimachinery/pkg/watch"
+	metricsv1beta1 "k8s.io/metrics/pkg/apis/metrics/v1beta1"
+	"k8s.io/metrics/pkg/client/clientset/versioned/typed/metrics/v1beta1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -909,4 +912,94 @@ func (m *MockFieldIndexer) IndexField(arg0 context.Context, arg1 client.Object, 
 func (mr *MockFieldIndexerMockRecorder) IndexField(arg0, arg1, arg2, arg3 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IndexField", reflect.TypeOf((*MockFieldIndexer)(nil).IndexField), arg0, arg1, arg2, arg3)
+}
+
+// MockPodMetricsesGetter is a mock of PodMetricsesGetter interface.
+type MockPodMetricsesGetter struct {
+	ctrl     *gomock.Controller
+	recorder *MockPodMetricsesGetterMockRecorder
+}
+
+// MockPodMetricsesGetterMockRecorder is the mock recorder for MockPodMetricsesGetter.
+type MockPodMetricsesGetterMockRecorder struct {
+	mock *MockPodMetricsesGetter
+}
+
+// NewMockPodMetricsesGetter creates a new mock instance.
+func NewMockPodMetricsesGetter(ctrl *gomock.Controller) *MockPodMetricsesGetter {
+	mock := &MockPodMetricsesGetter{ctrl: ctrl}
+	mock.recorder = &MockPodMetricsesGetterMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockPodMetricsesGetter) EXPECT() *MockPodMetricsesGetterMockRecorder {
+	return m.recorder
+}
+
+// PodMetricses mocks base method.
+func (m *MockPodMetricsesGetter) PodMetricses(namespace string) v1beta1.PodMetricsInterface {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "PodMetricses", namespace)
+	ret0, _ := ret[0].(v1beta1.PodMetricsInterface)
+	return ret0
+}
+
+// PodMetricses indicates an expected call of PodMetricses.
+func (mr *MockPodMetricsesGetterMockRecorder) PodMetricses(namespace interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PodMetricses", reflect.TypeOf((*MockPodMetricsesGetter)(nil).PodMetricses), namespace)
+}
+
+// MockPodMetricsInterface is a mock of PodMetricsInterface interface.
+type MockPodMetricsInterface struct {
+	ctrl     *gomock.Controller
+	recorder *MockPodMetricsInterfaceMockRecorder
+}
+
+// MockPodMetricsInterfaceMockRecorder is the mock recorder for MockPodMetricsInterface.
+type MockPodMetricsInterfaceMockRecorder struct {
+	mock *MockPodMetricsInterface
+}
+
+// NewMockPodMetricsInterface creates a new mock instance.
+func NewMockPodMetricsInterface(ctrl *gomock.Controller) *MockPodMetricsInterface {
+	mock := &MockPodMetricsInterface{ctrl: ctrl}
+	mock.recorder = &MockPodMetricsInterfaceMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockPodMetricsInterface) EXPECT() *MockPodMetricsInterfaceMockRecorder {
+	return m.recorder
+}
+
+// Get mocks base method.
+func (m *MockPodMetricsInterface) Get(ctx context.Context, name string, opts metav1.GetOptions) (*metricsv1beta1.PodMetrics, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Get", ctx, name, opts)
+	ret0, _ := ret[0].(*metricsv1beta1.PodMetrics)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Get indicates an expected call of Get.
+func (mr *MockPodMetricsInterfaceMockRecorder) Get(ctx, name, opts interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockPodMetricsInterface)(nil).Get), ctx, name, opts)
+}
+
+// List mocks base method.
+func (m *MockPodMetricsInterface) List(ctx context.Context, opts metav1.ListOptions) (*metricsv1beta1.PodMetricsList, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "List", ctx, opts)
+	ret0, _ := ret[0].(*metricsv1beta1.PodMetricsList)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// List indicates an expected call of List.
+func (mr *MockPodMetricsInterfaceMockRecorder) List(ctx, opts interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockPodMetricsInterface)(nil).List), ctx, opts)
 }
